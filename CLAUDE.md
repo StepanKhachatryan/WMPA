@@ -1,8 +1,8 @@
 # WMPA — working notes for Claude
 
-Water Management Platform Armenia: a web GIS platform for water in Armenia. Two clients will talk to one backend:
-this web map, and a QGIS plugin (Python, its own repo). They share an HTTP API
-and a PostGIS schema, never code — the languages do not meet.
+Water Management Platform Armenia. Two clients will talk to one backend: this
+web map, and a QGIS plugin (Python, its own repo). They share an HTTP API and a
+PostGIS schema, never code — the languages do not meet.
 
 Split off from the GeoGeeks site (`stepankhachatryan/geogeeks`), which links to
 this platform from its tools menu but does not host it.
