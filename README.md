@@ -1,4 +1,4 @@
-# WMPA
+# WMPA — Water Management Platform Armenia
 
 A web GIS platform for water in Armenia: rivers, lakes and canals as live map
 layers, with the spatial work done in PostGIS rather than in the browser.
