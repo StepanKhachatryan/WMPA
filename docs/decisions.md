@@ -33,6 +33,21 @@ Neon: PostGIS on every plan, branches (a dev branch costs nothing and cannot
 break production data), no card. Verified figures conflicted between Neon's own
 pages — 0.5 GB and 1 GB per project — so confirm before relying on either.
 
+## The map on Netlify, the API on Neon
+
+They are not alternatives. Netlify serves static files from a CDN; Neon runs the
+Function next to the database. Every tile is a database query, so the Function
+stays where the data is, and Netlify serves only the built map.
+
+Netlify Functions could host the Hono app too, but then each tile would cross
+two services, and the free plan's credits would pay for compute and tile
+traffic as well as the page.
+
+Cost: two dashboards and a CORS list to keep in step with the map's address.
+On Netlify's free plan (300 credits a month, 20 per GB of bandwidth since April
+2026) a site that runs out is suspended until the month ends. The build is
+about 282 KB gzipped, and tiles do not count against it.
+
 ## This repo is separate from the GeoGeeks site
 
 The site is static marketing plus one browser-only tool; this is a client-heavy

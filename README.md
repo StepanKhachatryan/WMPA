@@ -7,7 +7,7 @@ Two clients are planned against one backend — this web map, and a QGIS plugin 
 its own repository. They share an HTTP API and a database schema.
 
 The platform is linked from the [GeoGeeks](https://geogeeks.am) tools menu and
-opens as its own site.
+opens as its own site, at `https://wmpa.geogeeks.am`.
 
 ## Layout
 
@@ -21,6 +21,8 @@ opens as its own site.
 | `src/lib/water.ts` | The browser's side of that API |
 | `vite.config.ts` | Picks the API URL out of the env by name |
 | `scripts/dev-api.ts` | Runs the `water` Function locally on Node |
+| `netlify.toml` | Build and headers for the map on Netlify |
+| `docs/deploy.md` | Neon, then Netlify, then `wmpa.geogeeks.am` |
 | `CLAUDE.md` | Architecture, env vars, conventions, how to test without Neon |
 | `docs/decisions.md` | Why things are the way they are |
 

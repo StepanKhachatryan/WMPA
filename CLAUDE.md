@@ -7,6 +7,11 @@ PostGIS schema, never code — the languages do not meet.
 Split off from the GeoGeeks site (`stepankhachatryan/geogeeks`), which links to
 this platform from its tools menu but does not host it.
 
+**Hosting.** The map is a static build on Netlify at `https://wmpa.geogeeks.am`
+(`netlify.toml`); the API and PostGIS are on Neon, in `aws-eu-central-1`. Steps
+in `docs/deploy.md`. A new address for the map means a new entry in
+`ALLOWED_ORIGINS`, or the map loads with no layers.
+
 ## Architecture
 
 **Static-first.** Anything that can be a file served from object storage is one:
@@ -64,7 +69,7 @@ Written and verified against a local PostGIS 3.4:
   initial style, not added on `load`, so a blocked basemap cannot hold them back.
 - `src/lib/water.ts` — the browser's side of that API.
 
-Not done: `neon deploy` has never run, the Realtime subscription has never
+Not done: neither Neon nor Netlify has been deployed (`docs/deploy.md`), the Realtime subscription has never
 connected, and the basemap is OpenStreetMap's own tile server, which its policy
 allows for light use only — replace it before launch.
 

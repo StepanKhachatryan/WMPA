@@ -1,0 +1,28 @@
+# The map only: a static Vite build. The API and the database are on Neon
+# (see docs/deploy.md), so nothing here serves tiles or touches data.
+#
+# The build needs WATER_API_URL set in the site's environment variables, and
+# fails without it on purpose: a map built without it would point at localhost.
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# Vite puts a content hash in every file name under /assets, so a changed file
+# gets a new name and these can be cached for good. index.html keeps Netlify's
+# default (revalidate every time), which is what lets a new deploy show up.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    # Cross-origin requests still carry the origin as Referer, which
+    # OpenStreetMap's tile policy asks for.
+    Referrer-Policy = "strict-origin-when-cross-origin"

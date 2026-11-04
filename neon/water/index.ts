@@ -29,6 +29,8 @@ const live = createRealtime({ secret: realtime.secret, db: 'neondb' });
 
 /** Only the site may call this from a browser; anything else gets no CORS. */
 const ALLOWED_ORIGINS = [
+  // The map itself (Netlify). Browsers send the host lowercased.
+  'https://wmpa.geogeeks.am',
   'https://geogeeks.am',
   'https://www.geogeeks.am',
   'http://localhost:3000',
