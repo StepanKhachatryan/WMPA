@@ -1,0 +1,22 @@
+{
+  "name": "wmpa",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Web GIS platform for water in Armenia",
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@neon/config": "^1.10.2",
+    "@neon/env": "^1.6.10",
+    "@neon/functions": "^0.11.0",
+    "@neon/realtime": "^0.1.2",
+    "hono": "^4.13.16",
+    "pg": "^8.23.1"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "@types/pg": "^8.23.1",
+    "typescript": "^5.9.3"
+  }
+}
