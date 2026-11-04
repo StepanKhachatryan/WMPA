@@ -85,7 +85,8 @@ app.get('/tiles/:z/:x/:y', async (c) => {
       // Tiles are immutable for a while: served from the CDN, the database is
       // hit once per tile rather than once per viewer.
       'cache-control': 'public, max-age=300, s-maxage=86400',
-      'access-control-allow-origin': c.req.header('origin') ?? ALLOWED_ORIGINS[0],
+      // No CORS headers here: the `cors` middleware above adds them, and only
+      // for allowed origins. Setting one by hand would echo any origin.
     },
   });
 });

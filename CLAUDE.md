@@ -58,11 +58,15 @@ Written and verified against a local PostGIS 3.4:
   returning one MVT with `rivers`, `lakes` and `canals` as separate layers.
 - `neon/water/index.ts` — Hono app: `/health`, `/layers`, `/tiles/:z/:x/:y`,
   `/live/layers` (a sealed Realtime query).
+- `neon/water/seed-demo.sql` — one invented river and one invented lake
+  (`Պայմանական գետ`, `Պայմանական լիճ`) in Shirak. Placeholders, not data.
+- `src/main.ts` — the web map (Vite + MapLibre GL). Water layers are in the
+  initial style, not added on `load`, so a blocked basemap cannot hold them back.
 - `src/lib/water.ts` — the browser's side of that API.
 
-Not done: no frontend yet, `neon deploy` has never run, and the Realtime
-subscription has never connected (sealing is local, so `/live/layers` works
-offline; subscribing needs the real endpoint).
+Not done: `neon deploy` has never run, the Realtime subscription has never
+connected, and the basemap is OpenStreetMap's own tile server, which its policy
+allows for light use only — replace it before launch.
 
 ## Testing without Neon
 
@@ -77,9 +81,14 @@ createdb -h 127.0.0.1 -p 5433 -U postgres water
 psql -h 127.0.0.1 -p 5433 -U postgres -d water -f neon/water/schema.sql
 ```
 
-Then point `DATABASE_URL` at it and run the Hono app's `fetch` directly. A
+Then point `DATABASE_URL` at it and `npm run dev:api` serves the same Hono app
+on Node, with a request log; `npm run dev` serves the map on :3000, the dev
+origin the API's CORS list allows. A
 Realtime secret for local use must be well-formed or `createRealtime` throws:
 `nrt_live_1` followed by 32 random bytes as base64url.
+
+In a headless browser here, `load` waits on the blocked basemap; abort its
+requests (Playwright `page.route`) rather than waiting out tunnel failures.
 
 Decode a tile to check it rather than trusting its byte count —
 `@mapbox/vector-tile` with `pbf` reports the layers and their features.

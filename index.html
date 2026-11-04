@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="hy">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>WMPA — Water Management Platform Armenia</title>
+    <meta name="description" content="Հայաստանի ջրային ռեսուրսների վեբ GIS հարթակ" />
+  </head>
+  <body>
+    <div id="map" role="region" aria-label="Քարտեզ"></div>
+
+    <aside class="panel" aria-labelledby="panel-title">
+      <header>
+        <h1 id="panel-title">WMPA</h1>
+        <p>Water Management Platform Armenia</p>
+      </header>
+
+      <fieldset>
+        <legend>Շերտեր</legend>
+        <label><input type="checkbox" data-layer="lakes" checked />
+          <span class="swatch swatch-lake" aria-hidden="true"></span>Լճեր
+          <span class="count" data-count="lake"></span></label>
+        <label><input type="checkbox" data-layer="rivers" checked />
+          <span class="swatch swatch-river" aria-hidden="true"></span>Գետեր
+          <span class="count" data-count="river"></span></label>
+        <label><input type="checkbox" data-layer="canals" checked />
+          <span class="swatch swatch-canal" aria-hidden="true"></span>Ջրանցքներ
+          <span class="count" data-count="canal"></span></label>
+      </fieldset>
+
+      <p class="status" id="status" role="status">Միանում է…</p>
+    </aside>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
