@@ -43,6 +43,14 @@ writes the variables below into `.env.local`.
 | `NEON_REALTIME_URL` | WebSocket endpoint for the browser client |
 | `NEON_REALTIME_SECRET` | Server-only; seals live queries. Never ship it to a browser |
 
+`neon deploy` writes all of these into `.env.local`, but the deployed Functions
+runtime does not inject all of them: the first deploy (2026-11-04) failed to
+load with `NEON_REALTIME_SECRET is missing`. So the Function requires only
+`DATABASE_URL` and treats Realtime as optional (`/live/layers` answers 503
+without it). Anything else made required at module load can fail the same way;
+when a deploy shows `failed`, `neon functions get <slug> --output json` has the
+load error.
+
 Read them through `parseEnv(config, [...])` from `@neon/env` rather than
 `process.env` directly: the names come from `neon.ts` and stay in step with it.
 
@@ -69,8 +77,11 @@ Written and verified against a local PostGIS 3.4:
   initial style, not added on `load`, so a blocked basemap cannot hold them back.
 - `src/lib/water.ts` — the browser's side of that API.
 
-Not done: neither Neon nor Netlify has been deployed (`docs/deploy.md`), the Realtime subscription has never
-connected, and the basemap is OpenStreetMap's own tile server, which its policy
+Deployed: the `water` Function on Neon (`aws-eu-central-1`, branch `main`),
+`https://br-summer-haze-b9dii8xq-water.compute.c-7.eu-central-1.aws.neon.tech`.
+
+Not done: Netlify has not been deployed (`docs/deploy.md`), Realtime has no
+secret in the deployed runtime and has never connected, and the basemap is OpenStreetMap's own tile server, which its policy
 allows for light use only — replace it before launch.
 
 ## Testing without Neon

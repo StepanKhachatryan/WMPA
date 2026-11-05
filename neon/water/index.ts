@@ -18,14 +18,22 @@ import { cors } from 'hono/cors';
 import { Pool } from 'pg';
 import config from '../../neon';
 
-const { postgres, realtime } = parseEnv(config, ['DATABASE_URL', 'NEON_REALTIME_SECRET']);
+const { postgres } = parseEnv(config, ['DATABASE_URL']);
+
+// Realtime is optional on purpose. The deployed runtime injects DATABASE_URL
+// but not NEON_REALTIME_SECRET (the first deploy failed to load on exactly
+// that), and requiring it would take tiles down with the one route that needs
+// it. Only /live/layers depends on it; the map does not call that route yet.
+const realtime = process.env.NEON_REALTIME_SECRET
+  ? parseEnv(config, ['NEON_REALTIME_SECRET']).realtime
+  : undefined;
 
 // Module scope: the isolate is long-lived, so the pool is reused across
 // requests. `max` stays small because every isolate keeps its own.
 const pool = new Pool({ connectionString: postgres.databaseUrl, max: 5 });
 attachDatabasePool(pool);
 
-const live = createRealtime({ secret: realtime.secret, db: 'neondb' });
+const live = realtime ? createRealtime({ secret: realtime.secret, db: 'neondb' }) : undefined;
 
 /** Only the site may call this from a browser; anything else gets no CORS. */
 const ALLOWED_ORIGINS = [
@@ -98,6 +106,7 @@ app.get('/tiles/:z/:x/:y', async (c) => {
  * inside it, which is why the query is defined here and not there.
  */
 app.post('/live/layers', async (c) => {
+  if (!live) return c.json({ error: 'realtime not configured' }, 503);
   const sealed = await live.seal({
     query: rawSql<LayerRow>(
       `select kind, count(*)::int as features, max(updated_at) as updated_at

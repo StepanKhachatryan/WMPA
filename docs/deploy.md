@@ -29,7 +29,12 @@ psql "$DATABASE_URL_UNPOOLED" -f neon/water/schema.sql
 psql "$DATABASE_URL_UNPOOLED" -f neon/water/seed-demo.sql   # optional: demo river and lake
 ```
 
-Then confirm the API answers from outside:
+Then confirm the deploy is live and the API answers from outside:
+
+```bash
+neon functions list                          # status must not be "failed"
+neon functions get water --output json       # if it is: "error" says why
+```
 
 ```bash
 curl "$NEON_FUNCTION_WATER_BASE_URL/health"
