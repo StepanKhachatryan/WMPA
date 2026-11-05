@@ -82,7 +82,12 @@ branch `main`, PostGIS 3.6.4), with the demo river and lake applied by
 `npm run db:apply`. `/health` and `/layers` answer from outside (2026-11-05):
 `https://br-summer-haze-b9dii8xq-water.compute.c-7.eu-central-1.aws.neon.tech`.
 
-Not done: Netlify has not been deployed (`docs/deploy.md`), Realtime has no
+The map is live on Netlify (project `wmpa`, `wmpa.netlify.app`) at
+`wmpa.geogeeks.am`, a CNAME at name.am, where `geogeeks.am`'s DNS records are
+kept. It draws the demo layers from the Neon API (2026-11-05); the Let's
+Encrypt certificate was still pending that day.
+
+Not done: Realtime has no
 secret in the deployed runtime and has never connected, and the basemap is OpenStreetMap's own tile server, which its policy
 allows for light use only — replace it before launch.
 
