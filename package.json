@@ -9,6 +9,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "dev:api": "tsx scripts/dev-api.ts",
+    "db:apply": "tsx scripts/db-apply.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

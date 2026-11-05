@@ -24,10 +24,16 @@ written in.
 
 ```bash
 neon login
+neon link                                     # pick the Frankfurt project
 neon deploy                                   # Function + Realtime; writes .env.local
-psql "$DATABASE_URL_UNPOOLED" -f neon/water/schema.sql
-psql "$DATABASE_URL_UNPOOLED" -f neon/water/seed-demo.sql   # optional: demo river and lake
+npm run db:apply -- neon/water/schema.sql neon/water/seed-demo.sql
 ```
+
+`db:apply` connects with the `.env.local` that `neon deploy` just wrote, so the
+schema lands on the same branch and database the Function queries. The SQL
+Editor works too, but there the branch and database are picked by hand, and the
+first deploy queried an empty database because they were not the same.
+The seed is optional: it adds the demo river and lake.
 
 Then confirm the deploy is live and the API answers from outside:
 
