@@ -77,7 +77,9 @@ Written and verified against a local PostGIS 3.4:
   initial style, not added on `load`, so a blocked basemap cannot hold them back.
 - `src/lib/water.ts` — the browser's side of that API.
 
-Deployed: the `water` Function on Neon (`aws-eu-central-1`, branch `main`),
+Deployed: the `water` Function on Neon, project `WMPA` (`aws-eu-central-1`,
+branch `main`, PostGIS 3.6.4), with the demo river and lake applied by
+`npm run db:apply`. `/health` and `/layers` answer from outside (2026-11-05):
 `https://br-summer-haze-b9dii8xq-water.compute.c-7.eu-central-1.aws.neon.tech`.
 
 Not done: Netlify has not been deployed (`docs/deploy.md`), Realtime has no
